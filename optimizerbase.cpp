@@ -41,6 +41,15 @@ double OptimizerBase::calculateSearchDirection(double x)
     return - gradient/hessian;
 }
 
+void OptimizerBase::Optimize()
+{
+    while(!CheckTerminateCriteria()) {
+        CalculateSearchDirection();
+        CalculateStepSize;
+        Update();
+    }
+}
+
 void OptimizerBase::showResults()
 {
     double x = run();

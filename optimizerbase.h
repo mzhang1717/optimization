@@ -9,15 +9,27 @@ public:
 
     double doLineSearch(double x, double gradient, double searchDirection);
     double calculateSearchDirection(double x);
+    virtual void CalculateSearchDirection();
+    virtual void CalculateStepSize();
+    virtual bool CheckTerminateCriteria();
+    virtual void Update();
+    void Optimize();
 
     void showResults();
 
     double run();
 
-private:
-    CostFunctionBase* pFunction;
+
+    CostFunctionBase* p_cost_function_;
+    double cost_value_;
+    double cost_gradient_;
+    double x;
+ 
+
     double mConverageceParameter;
     int maxWorkCounter;
-    double initialGuess;
+    double initial_guess_;
+    double step_size_;
+    double search_direction_;
     //double linesearchCoefficient;
 };
