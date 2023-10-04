@@ -13,11 +13,13 @@ int main() {
     // std::cout << m << std::endl;
     std::vector<Eigen::Vector2d> x_vec;
     x_vec.push_back(Eigen::Vector2d{3.0,2.0});
-    x_vec.push_back(Eigen::Vector2d{-2.8,3.1});
-    x_vec.push_back(Eigen::Vector2d{-3.8,-3.3});
-    x_vec.push_back(Eigen::Vector2d{3.6,-1.8});
+    x_vec.push_back(Eigen::Vector2d{-2.805118,3.131312});
+    x_vec.push_back(Eigen::Vector2d{-3.77931,-3.283186});
+    x_vec.push_back(Eigen::Vector2d{3.584428,-1.848126});
 
-
+    double function_value;
+    Eigen::Vector2d gradient; 
+    Eigen::Matrix2d hessian; 
 
     
     //CostFunctionExample myfunction;
@@ -27,12 +29,14 @@ int main() {
     CostFunctionBase* pFunction{&myfunction};
 
     for (auto x : x_vec) {
+        function_value = pFunction->calculateCostFunctionValue(x);
+        pFunction->calculateGradient(x, gradient);
+        pFunction->calculateHessian(x, hessian);
+
         std::cout << x << std::endl 
-        << pFunction->calculateCostFunctionValue(x) << std::endl 
-        << pFunction->calculateGradient(x) << std::endl
-        << pFunction->calculateHessian(x) << std::endl << std::endl;
-
-
+        << function_value << std::endl 
+        << gradient << std::endl
+        << hessian << std::endl << std::endl;
     }
 
 
