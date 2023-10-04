@@ -9,9 +9,15 @@ cc_library(
     hdrs = ["costfunctionquadratic.h", "costfunctionbase.h"],
 )
 
+cc_library(
+    name = "function_himmelblau",
+    srcs = ["costfunctionhimmelblau.cpp"],
+    hdrs = ["costfunctionhimmelblau.h", "costfunctionbase.h"],
+)
+
 cc_binary(
     name = "test_function",
     srcs = ["test_function.cpp"],
-    deps = [":function_example", "function_quadratic",
+    deps = [":function_example", "function_quadratic", "function_himmelblau",
     ],
 )
