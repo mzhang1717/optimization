@@ -1,6 +1,6 @@
-#include "costfunctionexample.h"
-#include "costfunctionquadratic.h"
-#include "costfunctionhimmelblau.h"
+#include "../costfunctionexample.h"
+#include "../costfunctionquadratic.h"
+#include "../costfunctionhimmelblau.h"
 #include <vector>
 #include <iostream>
 //#include <matplot/matplot.h>
