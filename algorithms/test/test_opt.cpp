@@ -1,12 +1,19 @@
 #include <eigen3/Eigen/Dense>
 #include "../optimizerbase.h"
+#include "../optimizerdescent.h"
 #include "../../objectivefunction/costfunctionhimmelblau.h"
+#include "../../objectivefunction/costfunctionmccormick.h"
 //#include "costfunctionquadratic.h"
 
 int main () {
     //CostFunctionQuadratic myfunction;
-    CostFunctionHimmelblau myHimmelblau;
-    OptimizerBase myOptimizer(myHimmelblau, Eigen::Vector2d{2.0,1.0}) ;
+    //CostFunctionHimmelblau myfunction;
+    CostFunctionMcComick myfunction;
+
+    //OptimizerBase myOptimizer(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    
+    OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    OptimizerBase& myOptimizer{myOptimizerDescent};
 
     myOptimizer.optimize();
 

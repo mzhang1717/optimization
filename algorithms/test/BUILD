@@ -19,6 +19,8 @@ cc_binary(
     name = "test_opt",
     srcs = ["test_opt.cpp"],
     deps = ["//algorithms:optimizer_base", 
+            "//algorithms:optimizer_descent",
             "//objectivefunction:function_himmelblau",
+            "//objectivefunction:function_mccormick",
     ],
 )

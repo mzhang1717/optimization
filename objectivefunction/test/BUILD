@@ -5,5 +5,6 @@ cc_binary(
     "//objectivefunction:function_example", 
     "//objectivefunction:function_quadratic", 
     "//objectivefunction:function_himmelblau",
+    "//objectivefunction:function_mccormick",
     ],
 )

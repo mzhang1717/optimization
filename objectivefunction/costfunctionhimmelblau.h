@@ -8,10 +8,7 @@ public:
     CostFunctionHimmelblau() {}
     ~CostFunctionHimmelblau() {}
 
-    double calculateCostFunctionValue(const Eigen::Ref<const Eigen::VectorXd>& x);
-    void calculateGradient(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::VectorXd> gradient);
-    void calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian);
-
-
-
+    virtual double calculateCostFunctionValue(const Eigen::Ref<const Eigen::VectorXd>& x);
+    virtual void calculateGradient(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::VectorXd> gradient);
+    virtual void calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian);
 } ;

@@ -6,9 +6,8 @@ OptimizerBase::OptimizerBase() {
 }
 
 OptimizerBase::OptimizerBase(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini) 
-:ptr_cost_function_(&costfunction ) {
-    initial_guess_ = x_ini;
-    gradient_ = x_ini; // to set its size to the same as x
+:ptr_cost_function_(&costfunction ), initial_guess_(x_ini) {
+    gradient_.resize(x_ini.rows(), x_ini.cols()); // to set its size to the same as x
     //std::cout << "initial_guess_ = " << initial_guess_ << "---------------"<< std::endl;
     max_iterations_ = 500;
     gradient_epsilon_ = 0.000001;
@@ -39,13 +38,7 @@ void OptimizerBase::optimize()
 }
 
 bool OptimizerBase::isTerminationReady() {
-
-    if (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_ ){
-        return true;
-    }
-    else {
-        return false;
-    }
+    return true;
 }
 
 void OptimizerBase::update() {
@@ -61,7 +54,6 @@ void OptimizerBase::update() {
     ptr_cost_function_->calculateGradient(x_, gradient_);
     //std::cout << "g(x) = " << gradient_ << "----------------" <<std::endl; 
     
-
 }
 
 void OptimizerBase::initialUpdate(){
@@ -81,21 +73,11 @@ void OptimizerBase::initialUpdate(){
 
 void OptimizerBase::calculateSearchDirection()
 {
-    search_direction_ = -gradient_;
+
 }
 
 void OptimizerBase::backtrackingLineSearch(){
-    step_size_ = initial_step_size_;
 
-    double gradient_norm = gradient_.norm();
-    double gradient_square = gradient_norm * gradient_norm;
-
-     //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
-    while (ptr_cost_function_->calculateCostFunctionValue(x_ - step_size_ * gradient_) 
-            > function_value_ - slope_factor_ * step_size_ * gradient_square) {
-
-                step_size_ *= shrink_factor_;
-    }
 }
 
 void OptimizerBase::showResults()

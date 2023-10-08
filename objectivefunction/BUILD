@@ -28,3 +28,12 @@ cc_library(
     visibility = ["//objectivefunction/test:__pkg__",
     "//algorithms/test:__pkg__",],
 )
+
+cc_library(
+    name = "function_mccormick",
+    srcs = ["costfunctionmccormick.cpp"],
+    hdrs = ["costfunctionmccormick.h"],
+    deps =[":function_base",],
+    visibility = ["//objectivefunction/test:__pkg__",
+    "//algorithms/test:__pkg__",],
+)

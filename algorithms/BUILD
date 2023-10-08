@@ -6,6 +6,15 @@ cc_library(
     visibility = ["//algorithms/test:__pkg__"],
 )
 
+cc_library(
+    name = "optimizer_descent",
+    srcs = ["optimizerdescent.cpp"],
+    hdrs = ["optimizerdescent.h"],
+    deps = ["//objectivefunction:function_base",
+    ":optimizer_base",],
+    visibility = ["//algorithms/test:__pkg__"],
+)
+
 # cc_library(
 #     name = "optimizer_newton",
 #     srcs = ["optimizernewton.cpp","optimizerbase.cpp"],

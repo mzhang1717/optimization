@@ -1,10 +1,11 @@
-#include "../costfunctionexample.h"
-#include "../costfunctionquadratic.h"
-#include "../costfunctionhimmelblau.h"
 #include <vector>
 #include <iostream>
 //#include <matplot/matplot.h>
 #include <eigen3/Eigen/Dense>
+#include "../costfunctionexample.h"
+#include "../costfunctionquadratic.h"
+#include "../costfunctionhimmelblau.h"
+#include "../costfunctionmccormick.h"
 
 int main() {
 
@@ -24,7 +25,8 @@ int main() {
     
     //CostFunctionExample myfunction;
     //CostFunctionQuadratic qfunction;
-    CostFunctionHimmelblau myfunction;
+    //CostFunctionHimmelblau myfunction;
+    CostFunctionMcComick myfunction;
 
     CostFunctionBase* pFunction{&myfunction};
 
