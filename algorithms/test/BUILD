@@ -20,7 +20,9 @@ cc_binary(
     srcs = ["test_opt.cpp"],
     deps = ["//algorithms:optimizer_base", 
             "//algorithms:optimizer_descent",
+            "//algorithms:optimizer_newton",
             "//objectivefunction:function_himmelblau",
             "//objectivefunction:function_mccormick",
+            "//objectivefunction:function_quadratic",
     ],
 )
