@@ -10,7 +10,7 @@ public:
     OptimizerDescent(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini);
     ~OptimizerDescent() {}
 
-    virtual void backtrackingLineSearch();
+    //virtual void backtrackingLineSearch();
     virtual void calculateSearchDirection();
     virtual bool isTerminationReady();
     //virtual void update();

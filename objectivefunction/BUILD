@@ -2,7 +2,8 @@ cc_library(
     name = "function_base",
     hdrs = ["costfunctionbase.h"],
     visibility = ["//objectivefunction/test:__pkg__",
-                 "//algorithms:__pkg__",],
+                 "//algorithms:__pkg__",
+                 "//algorithms:__subpackages__",],
 )
 
 cc_library(
@@ -10,14 +11,18 @@ cc_library(
     srcs = ["costfunctionexample.cpp"],
     hdrs = ["costfunctionexample.h"],
     deps =[":function_base",],
-    visibility = ["//objectivefunction/test:__pkg__"],
+    visibility = ["//objectivefunction/test:__pkg__",
+    "//algorithms:__pkg__",
+    "//algorithms:__subpackages__",],
 )
 
 cc_library(
     name = "function_quadratic",
     hdrs = ["costfunctionquadratic.h"],
     deps =[":function_base",],
-    visibility = ["//objectivefunction/test:__pkg__"],
+    visibility = ["//objectivefunction/test:__pkg__",
+    "//algorithms:__pkg__",
+    "//algorithms:__subpackages__",],
 )
 
 cc_library(
@@ -26,7 +31,8 @@ cc_library(
     hdrs = ["costfunctionhimmelblau.h"],
     deps =[":function_base",],
     visibility = ["//objectivefunction/test:__pkg__",
-    "//algorithms/test:__pkg__",],
+    "//algorithms:__pkg__",
+    "//algorithms:__subpackages__",],
 )
 
 cc_library(
@@ -35,5 +41,6 @@ cc_library(
     hdrs = ["costfunctionmccormick.h"],
     deps =[":function_base",],
     visibility = ["//objectivefunction/test:__pkg__",
-    "//algorithms/test:__pkg__",],
+    "//algorithms:__pkg__",
+    "//algorithms:__subpackages__",],
 )

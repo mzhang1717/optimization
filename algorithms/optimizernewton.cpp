@@ -1,38 +1,35 @@
 #include "optimizernewton.h"
 
-void OptimizerNewton::CalculateSearchDirection()
-{
-    //calculate gradient g = pFun.calDeritive;
-    //calculate hessian h = pFun.calHessian;
-    //direction = -g/h
-
-}
-
-void OptimizerNewton::CalculateStepSize()
-{
-    //linesearch 
-    // calculate f_k+1 = pFun.calValue(x + alpha * searchDirection)
-    // calculate f_k = pFun.calValue(x)
-    // alpha *= beta until f_k+1 - f_k <= mu * alpha * g * searchDirection
-}
-
-bool OptimizerNewton::CheckTerminateCriteria()
-{
-    // option 1: |g_k| <= eps_g
-    // option 2: |f_k+1 - f_k| <= eps_a + eps_r * |f_k|
-
-    return false;
+OptimizerNewton::OptimizerNewton(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini):
+OptimizerBase{costfunction, x_ini} {
+    hessian_.resize(x_ini.rows(),x_ini.rows());
 }
 
 
-// needed membervariables
-// double stepsize
-// double searchDirection
-//
+// void OptimizerNewton::backtrackingLineSearch(){
 
-void OptimizerNewton::Update()
-{
-    cost_value_ = p_cost_function_->CalculateCostFunctionValue(x);
-    cost_gradient_ = p_cost_function_->CalculateGradient(x);
-    cost_hessian_ = p_cost_function_->CalculateHessian(x);
+// }
+
+void OptimizerNewton::calculateSearchDirection(){
+    search_direction_ = -hessian_.inverse() * gradient_;
+}
+
+bool OptimizerNewton::isTerminationReady(){
+    if (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_ ){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void OptimizerNewton::update(){
+    OptimizerBase::update();
+    ptr_cost_function_->calculateHessian(x_, hessian_);
+}
+
+void OptimizerNewton::initialUpdate(){
+    OptimizerBase::initialUpdate();
+    ptr_cost_function_->calculateHessian(x_, hessian_);
+
 }

@@ -77,7 +77,16 @@ void OptimizerBase::calculateSearchDirection()
 }
 
 void OptimizerBase::backtrackingLineSearch(){
+    step_size_ = initial_step_size_;
 
+    double gradient_square_negative = gradient_.transpose()*search_direction_;
+
+     //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
+    while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_) 
+            > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative)) {
+
+                step_size_ *= shrink_factor_;
+    }    
 }
 
 void OptimizerBase::showResults()

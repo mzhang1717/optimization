@@ -15,12 +15,14 @@ cc_library(
     visibility = ["//algorithms/test:__pkg__"],
 )
 
-# cc_library(
-#     name = "optimizer_newton",
-#     srcs = ["optimizernewton.cpp","optimizerbase.cpp"],
-#     hdrs = ["optimizernewton.h", "optimizerbase.h"],
-#     visibility = ["//test:__pkg__"],
-# )
+cc_library(
+    name = "optimizer_newton",
+    srcs = ["optimizernewton.cpp"],
+    hdrs = ["optimizernewton.h"],
+    deps = ["//objectivefunction:function_base",
+    ":optimizer_base",],
+    visibility = ["//algorithms/test:__pkg__"],
+)
 
 # cc_library(
 #     name = "function_quadratic",
