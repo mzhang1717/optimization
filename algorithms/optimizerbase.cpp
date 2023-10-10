@@ -1,5 +1,6 @@
-#include "optimizerbase.h"
 #include <iostream>
+#include "optimizerbase.h"
+
 
 OptimizerBase::OptimizerBase() {
 
@@ -81,12 +82,16 @@ void OptimizerBase::backtrackingLineSearch(){
 
     double gradient_square_negative = gradient_.transpose()*search_direction_;
 
+    int num_linesearch = 0;
      //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
     while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_) 
             > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative)) {
 
                 step_size_ *= shrink_factor_;
-    }    
+                num_linesearch++;
+    }
+
+    std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl;  
 }
 
 void OptimizerBase::showResults()

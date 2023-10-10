@@ -15,19 +15,19 @@ int main () {
 
     //OptimizerBase myOptimizerBase(myfunction, Eigen::Vector2d{2.0,1.0}) ;
     //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
-    OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.0,1.0}) ;;
+    OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.1,1.0}) ;;
 
     OptimizerBase& myOptimizer{myOptimizerNewton};
 
     myOptimizer.optimize();
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{-2,3.5});
+    myOptimizer.setInitialGuess(Eigen::Vector2d{-4,5});
     myOptimizer.optimize();
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{-4,-3.5});
+    myOptimizer.setInitialGuess(Eigen::Vector2d{-1,-5});
     myOptimizer.optimize();
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{4,-2.5});
+    myOptimizer.setInitialGuess(Eigen::Vector2d{6,-3});
     myOptimizer.optimize();
 
     return 0;

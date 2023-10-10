@@ -13,6 +13,7 @@ public:
     virtual bool isTerminationReady();
     virtual void update();
     virtual void initialUpdate();
+    bool isPositiveDefiniteMatrix(const Eigen::Ref<const Eigen::MatrixXd>& A);
 
 private:
     Eigen::MatrixXd hessian_;
