@@ -1,3 +1,4 @@
+#pragma once
 #include <cmath>
 #include <eigen3/Eigen/Dense>
 #include "optimizerbase.h"

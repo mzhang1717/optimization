@@ -24,6 +24,15 @@ cc_library(
     visibility = ["//algorithms/test:__pkg__"],
 )
 
+cc_library(
+    name = "optimizer_bfgs",
+    srcs = ["optimizerbfgs.cpp"],
+    hdrs = ["optimizerbfgs.h"],
+    deps = ["//objectivefunction:function_base",
+    ":optimizer_base",],
+    visibility = ["//algorithms/test:__pkg__"],
+)
+
 # cc_library(
 #     name = "function_quadratic",
 #     hdrs = ["costfunctionquadratic.h", "costfunctionbase.h"],

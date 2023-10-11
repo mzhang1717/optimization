@@ -21,6 +21,7 @@ cc_binary(
     deps = ["//algorithms:optimizer_base", 
             "//algorithms:optimizer_descent",
             "//algorithms:optimizer_newton",
+            "//algorithms:optimizer_bfgs",
             "//objectivefunction:function_himmelblau",
             "//objectivefunction:function_mccormick",
             "//objectivefunction:function_quadratic",

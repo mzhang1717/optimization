@@ -3,6 +3,7 @@
 #include "../optimizerbase.h"
 #include "../optimizerdescent.h"
 #include "../optimizernewton.h"
+#include "../optimizerbfgs.h"
 #include "../../objectivefunction/costfunctionhimmelblau.h"
 #include "../../objectivefunction/costfunctionmccormick.h"
 #include "../../objectivefunction/costfunctionquadratic.h"
@@ -35,9 +36,12 @@ int main () {
     ptrOptimizer->setInitialGuess(Eigen::Vector2d{6,-3});
     ptrOptimizer->optimize();
 
-    std::cout <<"------- Descent method -----" << std::endl;
-    OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
-    ptrOptimizer = &myOptimizerDescent;
+    std::cout <<"------- BFGS method -----" << std::endl;
+    //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    //ptrOptimizer = &myOptimizerDescent;
+
+    OptimizerBFGS myOPtimizerBFGS(myfunction, Eigen::Vector2d{-1.2,1.0}) ;
+    ptrOptimizer = &myOPtimizerBFGS;
 
     ptrOptimizer->optimize();
 
