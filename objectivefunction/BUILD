@@ -44,3 +44,11 @@ cc_library(
     "//algorithms:__pkg__",
     "//algorithms:__subpackages__",],
 )
+
+cc_library(
+    name = "function_rosenbrock",
+    srcs = ["costfunctionrosenbrock.cpp"],
+    hdrs = ["costfunctionrosenbrock.h"],
+    deps =[":function_base",],
+    visibility = ["//visibility:public",],
+)

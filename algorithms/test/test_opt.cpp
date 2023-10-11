@@ -1,3 +1,4 @@
+#include <iostream>
 #include <eigen3/Eigen/Dense>
 #include "../optimizerbase.h"
 #include "../optimizerdescent.h"
@@ -5,30 +6,50 @@
 #include "../../objectivefunction/costfunctionhimmelblau.h"
 #include "../../objectivefunction/costfunctionmccormick.h"
 #include "../../objectivefunction/costfunctionquadratic.h"
+#include "../../objectivefunction/costfunctionrosenbrock.h"
 //#include "costfunctionquadratic.h"
 
 int main () {
     //CostFunctionQuadratic myfunction;
-    CostFunctionHimmelblau myfunction;
+    //CostFunctionHimmelblau myfunction;
     //CostFunctionMcComick myfunction;
     //CostFunctionQuadratic myfunction;
+    CostFunctionRosenbrock myfunction;
 
     //OptimizerBase myOptimizerBase(myfunction, Eigen::Vector2d{2.0,1.0}) ;
     //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
-    OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.1,1.0}) ;;
+    OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.1,1.0}) ;
 
-    OptimizerBase& myOptimizer{myOptimizerNewton};
+    std::cout <<"------- Newton method -----" << std::endl;
 
-    myOptimizer.optimize();
+    OptimizerBase* ptrOptimizer{&myOptimizerNewton};
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{-4,5});
-    myOptimizer.optimize();
+    ptrOptimizer->optimize();
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{-1,-5});
-    myOptimizer.optimize();
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-4,5});
+    ptrOptimizer->optimize();
 
-    myOptimizer.setInitialGuess(Eigen::Vector2d{6,-3});
-    myOptimizer.optimize();
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-1,-5});
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{6,-3});
+    ptrOptimizer->optimize();
+
+    std::cout <<"------- Descent method -----" << std::endl;
+    OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    ptrOptimizer = &myOptimizerDescent;
+
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-4,5});
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-1,-5});
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{6,-3});
+    ptrOptimizer->optimize();
+
 
     return 0;
 }

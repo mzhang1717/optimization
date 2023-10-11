@@ -10,11 +10,11 @@ OptimizerBase::OptimizerBase(CostFunctionBase& costfunction, const Eigen::Ref<co
 :ptr_cost_function_(&costfunction ), initial_guess_(x_ini) {
     gradient_.resize(x_ini.rows(), x_ini.cols()); // to set its size to the same as x
     //std::cout << "initial_guess_ = " << initial_guess_ << "---------------"<< std::endl;
-    max_iterations_ = 500;
+    max_iterations_ = 5000;
     gradient_epsilon_ = 0.000001;
     initial_step_size_ = 1.0;
-    shrink_factor_ = 0.5;
-    slope_factor_ =0.5;
+    shrink_factor_ = 0.9;
+    slope_factor_ = 0.0001;
 }
 
 OptimizerBase::~OptimizerBase() {
@@ -91,7 +91,7 @@ void OptimizerBase::backtrackingLineSearch(){
                 num_linesearch++;
     }
 
-    std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl;  
+    //std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl;  
 }
 
 void OptimizerBase::showResults()

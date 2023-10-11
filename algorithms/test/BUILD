@@ -24,5 +24,6 @@ cc_binary(
             "//objectivefunction:function_himmelblau",
             "//objectivefunction:function_mccormick",
             "//objectivefunction:function_quadratic",
+            "//objectivefunction:function_rosenbrock",
     ],
 )
