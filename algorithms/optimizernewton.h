@@ -9,11 +9,11 @@ public:
     OptimizerNewton(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini);
     ~OptimizerNewton() {}
 
-    //virtual void backtrackingLineSearch();
-    virtual void calculateSearchDirection();
-    virtual bool isTerminationReady();
-    virtual void update();
-    virtual void initialUpdate();
+    // void backtrackingLineSearch();
+    void calculateSearchDirection();
+    //bool isTerminationReady();
+    void update();
+    void initialUpdate();
     bool isPositiveDefiniteMatrix(const Eigen::Ref<const Eigen::MatrixXd>& A);
 
 private:

@@ -14,7 +14,6 @@ int main () {
     //CostFunctionQuadratic myfunction;
     //CostFunctionHimmelblau myfunction;
     //CostFunctionMcComick myfunction;
-    //CostFunctionQuadratic myfunction;
     CostFunctionRosenbrock myfunction;
 
     //OptimizerBase myOptimizerBase(myfunction, Eigen::Vector2d{2.0,1.0}) ;
@@ -54,6 +53,20 @@ int main () {
     ptrOptimizer->setInitialGuess(Eigen::Vector2d{6,-3});
     ptrOptimizer->optimize();
 
+    std::cout <<"------- Gradient Descent Method -----" << std::endl;
+    OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    ptrOptimizer = &myOptimizerDescent;
+
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-4,5});
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{-1,-5});
+    ptrOptimizer->optimize();
+
+    ptrOptimizer->setInitialGuess(Eigen::Vector2d{6,-3});
+    ptrOptimizer->optimize();
 
     return 0;
 }

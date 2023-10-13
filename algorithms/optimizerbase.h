@@ -15,6 +15,7 @@ public:
     virtual void initialUpdate();
     virtual void update();
     virtual void optimize();
+    
     void setInitialGuess(const Eigen::Ref<const Eigen::VectorXd>& x_ini);
 
     void showResults();
@@ -31,6 +32,8 @@ public:
     double gradient_epsilon_;
     int max_iterations_;
     int number_iterations;
+    int max_linesearch_;
+    //int num_linesearch_;
     
     Eigen::VectorXd initial_guess_;
 
@@ -38,4 +41,5 @@ public:
     double initial_step_size_;
     double shrink_factor_;
     double slope_factor_;
+    double curve_factor_;
 };

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "optimizerbase.h"
 
 
@@ -7,14 +8,13 @@ OptimizerBase::OptimizerBase() {
 }
 
 OptimizerBase::OptimizerBase(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini) 
-:ptr_cost_function_(&costfunction ), initial_guess_(x_ini) {
+:ptr_cost_function_{&costfunction }, initial_guess_{x_ini} {
     gradient_.resize(x_ini.rows(), x_ini.cols()); // to set its size to the same as x
     //std::cout << "initial_guess_ = " << initial_guess_ << "---------------"<< std::endl;
     max_iterations_ = 5000;
-    gradient_epsilon_ = 0.000001;
-    initial_step_size_ = 1.0;
-    shrink_factor_ = 0.9;
-    slope_factor_ = 0.0001;
+    max_linesearch_ = 50;
+
+
 }
 
 OptimizerBase::~OptimizerBase() {
@@ -33,13 +33,23 @@ void OptimizerBase::optimize()
         calculateSearchDirection();
         backtrackingLineSearch();
         update();
+
+        if (std::isnan(function_value_)) {
+            std::cerr << "*** NaN *** at step " << number_iterations << std::endl;
+            break;
+        }
     }
     
     showResults();
 }
 
 bool OptimizerBase::isTerminationReady() {
-    return true;
+    if (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_ ){
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void OptimizerBase::update() {
@@ -91,7 +101,8 @@ void OptimizerBase::backtrackingLineSearch(){
                 num_linesearch++;
     }
 
-    //std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl;  
+    //std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl; 
+       
 }
 
 void OptimizerBase::showResults()

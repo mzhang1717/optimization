@@ -4,12 +4,13 @@
 OptimizerNewton::OptimizerNewton(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini):
 OptimizerBase{costfunction, x_ini} {
     hessian_.resize(x_ini.rows(),x_ini.rows());
+
+    gradient_epsilon_ = 0.000001;
+    initial_step_size_ = 1.0;
+    shrink_factor_ = 0.9;
+    slope_factor_ = 0.0001;
 }
 
-
-// void OptimizerNewton::backtrackingLineSearch(){
-
-// }
 
 void OptimizerNewton::calculateSearchDirection(){
     if(isPositiveDefiniteMatrix(hessian_)){
@@ -24,14 +25,6 @@ void OptimizerNewton::calculateSearchDirection(){
     } 
 }
 
-bool OptimizerNewton::isTerminationReady(){
-    if (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_ ){
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
 void OptimizerNewton::update(){
     OptimizerBase::update();

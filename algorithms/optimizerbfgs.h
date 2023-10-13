@@ -11,7 +11,7 @@ public:
 
 
     void calculateSearchDirection();
-    bool isTerminationReady();
+    //bool isTerminationReady();
     void update();
     void initialUpdate();
     void backtrackingLineSearch();
@@ -20,5 +20,5 @@ public:
 private:
     //Eigen::MatrixXd hessian_;
     Eigen::MatrixXd hessian_inverse_;
-    double curve_factor_;
+    
 };

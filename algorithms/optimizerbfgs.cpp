@@ -3,9 +3,16 @@
 
 OptimizerBFGS::OptimizerBFGS(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini):
 OptimizerBase{costfunction, x_ini} {
-    //hessian_.resize(x_ini.rows(),x_ini.rows());
+
     hessian_inverse_.resize(x_ini.rows(),x_ini.rows());
+
+    gradient_epsilon_ = 0.000001;
+    initial_step_size_ = 1.0;
+    shrink_factor_ = 0.9;
+    slope_factor_ = 0.0001;
+
     curve_factor_ = 0.9;
+
     assert(curve_factor_ > slope_factor_);
 }
 
@@ -58,28 +65,28 @@ void OptimizerBFGS::backtrackingLineSearch(){
     step_size_ = initial_step_size_;
 
     double gradient_square_negative = gradient_.transpose()*search_direction_;
+
     Eigen::VectorXd gradient_next = gradient_;
     ptr_cost_function_->calculateGradient(x_ + step_size_ * search_direction_, gradient_next);
 
+    double function_value_next = ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_);
+
     int num_linesearch = 0;
      //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
-    while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_) 
-            > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative) &&
-            gradient_next.transpose()*search_direction_ < curve_factor_* gradient_square_negative) {
+    while (( function_value_next > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative) ||
+            gradient_next.transpose()*search_direction_ < curve_factor_* gradient_square_negative) && num_linesearch <= max_linesearch_) {
+                
+                step_size_ *= shrink_factor_;
 
                 ptr_cost_function_->calculateGradient(x_ + step_size_ * search_direction_, gradient_next);
-                step_size_ *= shrink_factor_;
+                function_value_next = ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_);
+
+                
                 num_linesearch++;
     }
 
-    //std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl;  
-}
-
-bool OptimizerBFGS::isTerminationReady(){
-    if (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_ ){
-        return true;
-    }
-    else {
-        return false;
-    }
+    // if (num_linesearch_ > 90) {
+    //     std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl; 
+    // }
+       
 }
