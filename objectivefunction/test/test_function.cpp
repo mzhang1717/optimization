@@ -6,6 +6,8 @@
 #include "../costfunctionquadratic.h"
 #include "../costfunctionhimmelblau.h"
 #include "../costfunctionmccormick.h"
+#include "../costfunctionrosenbrock.h"
+#include "../costfunctionrosenbrock.h"
 
 int main() {
 
@@ -26,7 +28,9 @@ int main() {
     //CostFunctionExample myfunction;
     //CostFunctionQuadratic qfunction;
     //CostFunctionHimmelblau myfunction;
-    CostFunctionMcComick myfunction;
+    //CostFunctionRosenbrock myfunction; 
+    CostFunctionMcCormick myfunction;
+
 
     CostFunctionBase* pFunction{&myfunction};
 

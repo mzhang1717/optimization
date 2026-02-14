@@ -1,4 +1,3 @@
-#include <cmath>
 #pragma once
 #include "costfunctionbase.h"
 
