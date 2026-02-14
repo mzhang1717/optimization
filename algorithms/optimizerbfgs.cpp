@@ -45,9 +45,13 @@ void OptimizerBFGS::update(){
     //y_k = g_k+1 - g_k
     Eigen::VectorXd y = gradient_ - gradient_previous;
 
-    // rho = 1/(y.T*s)
-
-    double rho = 1/(y.dot(s));
+    // rho = 1/(y.T*s); skip update if y'*s not sufficiently positive (safeguard)
+    const double y_dot_s = y.dot(s);
+    const double curvature_epsilon = 1e-10;
+    if (y_dot_s <= curvature_epsilon) {
+        return;  // keep current hessian_inverse_, avoid division by zero / indefinite update
+    }
+    double rho = 1 / y_dot_s;
 
     // H = (I - rho*s*y.T)*H*(I - rho*y*s.T) + rho*s*s.T
     Eigen::MatrixXd H = hessian_inverse_;
@@ -64,17 +68,19 @@ void OptimizerBFGS::update(){
 void OptimizerBFGS::backtrackingLineSearch(){
     step_size_ = initial_step_size_;
 
-    double gradient_square_negative = gradient_.transpose()*search_direction_;
+    double directional_derivative = gradient_.transpose()*search_direction_;
 
     Eigen::VectorXd gradient_next = gradient_;
     ptr_cost_function_->calculateGradient(x_ + step_size_ * search_direction_, gradient_next);
 
     double function_value_next = ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_);
+    const double min_step_size = 1e-14;
 
     int num_linesearch = 0;
-     //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
-    while (( function_value_next > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative) ||
-            gradient_next.transpose()*search_direction_ < curve_factor_* gradient_square_negative) && num_linesearch <= max_linesearch_) {
+     //shrink step size until f(x + step size * p) <= f(x) + step size*slope_factor_*p
+    while (( function_value_next > (function_value_ + slope_factor_ * step_size_ * directional_derivative) ||
+            gradient_next.transpose()*search_direction_ < curve_factor_* directional_derivative) 
+            && num_linesearch <= max_linesearch_ && step_size_ >= min_step_size) {
                 
                 step_size_ *= shrink_factor_;
 
@@ -85,8 +91,8 @@ void OptimizerBFGS::backtrackingLineSearch(){
                 num_linesearch++;
     }
 
-    // if (num_linesearch_ > 90) {
-    //     std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl; 
-    // }
+    if (step_size_ < min_step_size) {
+        std::cout << "At " << number_iterations << "th iteration, step_size_ = "  << step_size_ << std::endl; 
+    }
        
 }

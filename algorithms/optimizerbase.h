@@ -10,7 +10,7 @@ public:
     ~OptimizerBase();
 
     virtual void backtrackingLineSearch();
-    virtual void calculateSearchDirection();
+    virtual void calculateSearchDirection() = 0;  // pure virtual: makes OptimizerBase abstract
     virtual bool isTerminationReady();
     virtual void initialUpdate();
     virtual void update();
@@ -18,7 +18,7 @@ public:
     
     void setInitialGuess(const Eigen::Ref<const Eigen::VectorXd>& x_ini);
 
-    void showResults();
+    void showResults() const;
 
 
     CostFunctionBase* ptr_cost_function_;

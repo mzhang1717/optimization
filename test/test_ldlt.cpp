@@ -68,6 +68,11 @@ bool isPositiveDefiniteMatrix(const Eigen::MatrixXd& A) {
     return bPositive;
 }
 
+
+
+
+
+
 int main() {
     Eigen::MatrixXd A(3, 3);
     A << 4, 2, -2,
@@ -97,3 +102,62 @@ int main() {
 
     return 0;
 }
+
+
+
+
+// #include <Eigen/Dense>
+// #include <algorithm>
+// #include <cmath>
+
+// void rookPivoting(const Eigen::MatrixXd& A, Eigen::PermutationMatrix<Eigen::Dynamic>& P) {
+//     int n = A.rows();
+
+//     Eigen::VectorXd maxInRow = A.rowwise().maxCoeff();
+//     Eigen::VectorXd maxInCol = A.colwise().maxCoeff();
+
+//     P.setIdentity(n);
+
+//     for (int k = 0; k < n; ++k) {
+//         // Find the largest value in the matrix A
+//         int pivotRow, pivotCol;
+//         maxInRow.maxCoeff(&pivotRow);
+//         maxInCol.maxCoeff(&pivotCol);
+
+//         // Check if the max in the row of the selected max is greater than the max in its column
+//         double maxOfRow = A(pivotRow, pivotCol);
+//         double maxOfCol = A(pivotCol, pivotRow);
+
+//         if (std::abs(maxOfRow) >= std::abs(maxOfCol)) {
+//             P.applyTranspositionOnTheRight(k, pivotRow);
+//             std::swap(maxInRow[k], maxInRow[pivotRow]);
+//         } else {
+//             P.applyTranspositionOnTheRight(k, pivotCol);
+//             std::swap(maxInRow[k], maxInRow[pivotCol]);
+//         }
+
+//         if (k < n - 1) {
+//             // Update the maximums
+//             for (int i = k + 1; i < n; ++i) {
+//                 maxInRow[i] = std::max(maxInRow[i], std::abs(A(i, k)));
+//                 maxInCol[i] = std::max(maxInCol[i], std::abs(A(k, i)));
+//             }
+//         }
+//     }
+// }
+
+// int main() {
+//     Eigen::MatrixXd A(4, 4);
+//     A <<  2,  1, -1,  0,
+//           1, -2,  0, -1,
+//          -1,  0,  3, -1,
+//           0, -1, -1,  2;
+
+//     Eigen::PermutationMatrix<Eigen::Dynamic> P;
+//     rookPivoting(A, P);
+    
+//     Eigen::MatrixXd PA = P * A * P.transpose();
+//     std::cout << "Pivoted matrix: \n" << PA << std::endl;
+
+//     return 0;
+// }

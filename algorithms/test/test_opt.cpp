@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <eigen3/Eigen/Dense>
 #include "../optimizerbase.h"
 #include "../optimizerdescent.h"
@@ -18,11 +19,11 @@ int main () {
 
     //OptimizerBase myOptimizerBase(myfunction, Eigen::Vector2d{2.0,1.0}) ;
     //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
-    OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.1,1.0}) ;
+    //OptimizerNewton myOptimizerNewton(myfunction, Eigen::Vector2d{2.1,1.0}) ;
 
     std::cout <<"------- Newton method -----" << std::endl;
 
-    OptimizerBase* ptrOptimizer{&myOptimizerNewton};
+    std::unique_ptr<OptimizerBase> ptrOptimizer{new OptimizerNewton{myfunction, Eigen::Vector2d{2.1,1.0}}};
 
     ptrOptimizer->optimize();
 
@@ -39,8 +40,10 @@ int main () {
     //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
     //ptrOptimizer = &myOptimizerDescent;
 
-    OptimizerBFGS myOPtimizerBFGS(myfunction, Eigen::Vector2d{-1.2,1.0}) ;
-    ptrOptimizer = &myOPtimizerBFGS;
+    // OptimizerBFGS myOPtimizerBFGS(myfunction, Eigen::Vector2d{-1.2,1.0}) ;
+    // ptrOptimizer = &myOPtimizerBFGS;
+
+    ptrOptimizer.reset(new OptimizerBFGS(myfunction, Eigen::Vector2d{-1.2,1.0})); //= std::make_unique<OptimizerBFGS>(myfunction, Eigen::Vector2d{-1.2,1.0});
 
     ptrOptimizer->optimize();
 
@@ -54,8 +57,10 @@ int main () {
     ptrOptimizer->optimize();
 
     std::cout <<"------- Gradient Descent Method -----" << std::endl;
-    OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
-    ptrOptimizer = &myOptimizerDescent;
+    // OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
+    // ptrOptimizer = &myOptimizerDescent;
+
+    ptrOptimizer.reset(new OptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ); //= std::make_unique<OptimizerDescent>(myfunction, Eigen::Vector2d{2.0,1.0}) ;
 
     ptrOptimizer->optimize();
 

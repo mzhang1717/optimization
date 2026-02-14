@@ -14,7 +14,8 @@ OptimizerBase{costfunction, x_ini} {
 
 void OptimizerNewton::calculateSearchDirection(){
     if(isPositiveDefiniteMatrix(hessian_)){
-        search_direction_ = -hessian_.inverse() * gradient_;
+        // Solve hessian_ * d = -gradient_ (more stable than explicit inverse)
+        search_direction_ = -hessian_.ldlt().solve(gradient_);
     }
     else {
         std::cout << "At " << number_iterations <<  "th iteration: Hessian is NOT positive definite!" << std::endl;
@@ -38,20 +39,6 @@ void OptimizerNewton::initialUpdate(){
 }
 
 bool OptimizerNewton::isPositiveDefiniteMatrix(const Eigen::Ref<const Eigen::MatrixXd>& A) {
-    // if (A.rows() != A.cols()) {
-    //     std::cerr << "Matrix is not square!" << std::endl;
-    //     return false;
-    // }
-
-    int n = A.rows();
-    bool bPositive = true;
-
-    for (int i = 1; i<=n; i++){
-        if (A.block(0,0,i,i).determinant() <= 0) {
-            bPositive = false;
-            break;
-        }
-    }
-
-    return bPositive;
+    Eigen::LDLT<Eigen::MatrixXd> ldlt(A);
+    return ldlt.isPositive();
 }

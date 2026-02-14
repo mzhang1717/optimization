@@ -70,21 +70,13 @@ void OptimizerBase::update() {
 void OptimizerBase::initialUpdate(){
 
     number_iterations = 0;
-    //std::cout << "num_iterations = " << number_iterations << std::endl;
 
     x_ = initial_guess_;
-    //std::cout << "x = " << x_ << std::endl;
-
     function_value_ = ptr_cost_function_->calculateCostFunctionValue(x_);
-    //std::cout << "f(x) = " << function_value_ << std::endl;
-
     ptr_cost_function_->calculateGradient(x_, gradient_);
-    //std::cout << "g(x) = " << gradient_ << "----------------" <<std::endl;    
-}
 
-void OptimizerBase::calculateSearchDirection()
-{
-
+    // Ensure search_direction_ has correct size before first calculateSearchDirection()
+    search_direction_.resizeLike(gradient_);
 }
 
 void OptimizerBase::backtrackingLineSearch(){
@@ -92,23 +84,24 @@ void OptimizerBase::backtrackingLineSearch(){
 
     double gradient_square_negative = gradient_.transpose()*search_direction_;
 
+    const double min_step_size = 1e-14;
     int num_linesearch = 0;
-     //shrink step size until f(x - step size * p) <= f(x) - step size*slope_factor_*p
-    while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_) 
+    // Shrink step until Armijo: f(x + step*p) <= f(x) + step*slope_factor_*gradient'*p
+    while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_)
             > (function_value_ + slope_factor_ * step_size_ * gradient_square_negative)) {
 
-                step_size_ *= shrink_factor_;
-                num_linesearch++;
+        step_size_ *= shrink_factor_;
+        num_linesearch++;
+        if (num_linesearch >= max_linesearch_ || step_size_ < min_step_size) {
+            break;
+        }
     }
-
-    //std::cout << "At " << number_iterations << "th iteration, num_linesearch = "  << num_linesearch << std::endl; 
-       
 }
 
-void OptimizerBase::showResults()
+void OptimizerBase::showResults() const
 {
-    std::cout << "x_min = " << x_ << std::endl
+    std::cout << "x_min = " << std::endl << x_ << std::endl
      << "f(x_min) = " << function_value_ << std::endl
-     << "g(x_min) = " << gradient_ << std::endl
+     << "g(x_min) = " <<  std::endl << gradient_  << std::endl
      << "num_iterations = " << number_iterations << std::endl << std::endl;
 }
