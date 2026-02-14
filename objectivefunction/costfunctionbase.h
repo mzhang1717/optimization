@@ -4,7 +4,7 @@
 class CostFunctionBase {
 public:
     CostFunctionBase(){}
-    ~CostFunctionBase(){}
+    virtual ~CostFunctionBase() = default;
 
     virtual double calculateCostFunctionValue(double x) { return 0;}
     virtual double calculateGradient(double x){return 0;}
