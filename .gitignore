@@ -16,3 +16,6 @@
 
 # Bazel build output
 bazel-*
+
+# others
+algorithms/OPTIMIZER_REVIEW.md
