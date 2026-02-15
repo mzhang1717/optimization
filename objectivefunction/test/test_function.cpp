@@ -26,7 +26,7 @@ int main() {
 
     
     //CostFunctionExample myfunction;
-    //CostFunctionQuadratic qfunction;
+    //CostFunctionQuadratic myfunction;
     //CostFunctionHimmelblau myfunction;
     //CostFunctionRosenbrock myfunction; 
     CostFunctionMcCormick myfunction;
@@ -34,15 +34,16 @@ int main() {
 
     CostFunctionBase* pFunction{&myfunction};
 
-    for (auto x : x_vec) {
+    for (const auto& x : x_vec) {
         function_value = pFunction->calculateCostFunctionValue(x);
         pFunction->calculateGradient(x, gradient);
         pFunction->calculateHessian(x, hessian);
 
-        std::cout << x << std::endl 
-        << function_value << std::endl 
-        << gradient << std::endl
-        << hessian << std::endl << std::endl;
+        std::cout << "x = " << std::endl << x << std::endl 
+        << "f(x) = " << std::endl << function_value << std::endl 
+        << "g(x) = " << std::endl << gradient << std::endl
+        << "H(x) = " << std::endl << hessian << std::endl << std::endl;
+
     }
 
 
@@ -60,9 +61,9 @@ int main() {
 
 //     for (int i = 0; i < num_points; i++) {
 // /*         x_list[i] = x;
-//         value_list[i] = myfuncion.calculateCostFunctionValue(x);
-//         derivative_list[i] = myfuncion.calculateGradient(x);
-//         hessian_list[i] = myfuncion.calculateHessian(x); */
+//         value_list[i] = myfunction.calculateCostFunctionValue(x);
+//         derivative_list[i] = myfunction.calculateGradient(x);
+//         hessian_list[i] = myfunction.calculateHessian(x); */
 
         
 
