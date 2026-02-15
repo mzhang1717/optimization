@@ -19,11 +19,11 @@ public:
     ~OptimizerNewton() {}
 
     /// Newton direction: solve H*d = -g via LDLT; if H not PD, use -gradient_.
-    void calculateSearchDirection();
+    void calculateSearchDirection() override;
     /// Advance iterate then recompute Hessian at new x_ (for next direction).
-    void update();
+    void update() override;
     /// Initialize state and compute Hessian at initial point.
-    void initialUpdate();
+    void initialUpdate() override;
     /// True if A is symmetric positive definite (via Eigen::LDLT::isPositive()).
     bool isPositiveDefiniteMatrix(const Eigen::Ref<const Eigen::MatrixXd>& A);
 

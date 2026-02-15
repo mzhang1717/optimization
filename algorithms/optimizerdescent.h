@@ -19,5 +19,5 @@ public:
     ~OptimizerDescent() {}
 
     /// Set search_direction_ = -gradient_ (steepest descent direction).
-    void calculateSearchDirection();
+    void calculateSearchDirection() override;
 };
