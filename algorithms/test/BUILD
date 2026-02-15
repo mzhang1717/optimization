@@ -18,10 +18,11 @@
 cc_binary(
     name = "test_opt",
     srcs = ["test_opt.cpp"],
-    deps = ["//algorithms:optimizer_base", 
+    deps = ["//algorithms:optimizer_base",
             "//algorithms:optimizer_descent",
             "//algorithms:optimizer_newton",
             "//algorithms:optimizer_bfgs",
+            "//objectivefunction:function_convex3d",
             "//objectivefunction:function_himmelblau",
             "//objectivefunction:function_mccormick",
             "//objectivefunction:function_quadratic",
