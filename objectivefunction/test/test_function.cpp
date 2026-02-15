@@ -7,43 +7,60 @@
 #include "../costfunctionhimmelblau.h"
 #include "../costfunctionmccormick.h"
 #include "../costfunctionrosenbrock.h"
+#include "../costfunctionconvex3d.h"
 
 
 int main() {
 
-    // Eigen::Matrix2d m;
-    // m << 1, 2, 3, 4;
-    // std::cout << m << std::endl;
+    // ----- Test CostFunctionConvex3D (3 variables: f(x) = x1^2 + x2^2 + x3^2) -----
+    std::cout << "=== CostFunctionConvex3D ===" << std::endl;
+    CostFunctionConvex3D convex3d_function;
+    CostFunctionBase* pConvex3d = &convex3d_function;
+
+    std::vector<Eigen::Vector3d> x3_vec;
+    x3_vec.push_back(Eigen::Vector3d{0.0, 0.0, 0.0});
+    x3_vec.push_back(Eigen::Vector3d{1.0, 2.0, 3.0});
+    x3_vec.push_back(Eigen::Vector3d{-1.0, 0.5, -2.0});
+
+    Eigen::Vector3d gradient3;
+    Eigen::Matrix3d hessian3;
+
+    for (const auto& x : x3_vec) {
+        double f = pConvex3d->calculateCostFunctionValue(x);
+        pConvex3d->calculateGradient(x, gradient3);
+        pConvex3d->calculateHessian(x, hessian3);
+
+        std::cout << "x = " << std::endl << x << std::endl
+                  << "f(x) = " << std::endl << f << std::endl
+                  << "g(x) = " << std::endl << gradient3 << std::endl
+                  << "H(x) = " << std::endl << hessian3 << std::endl << std::endl;
+    }
+
+    // ----- Test 2D cost function (e.g. McCormick) -----
+    std::cout << "=== CostFunctionMcCormick (2D) ===" << std::endl;
     std::vector<Eigen::Vector2d> x_vec;
-    x_vec.push_back(Eigen::Vector2d{3.0,2.0});
-    x_vec.push_back(Eigen::Vector2d{-2.805118,3.131312});
-    x_vec.push_back(Eigen::Vector2d{-3.77931,-3.283186});
-    x_vec.push_back(Eigen::Vector2d{3.584428,-1.848126});
+    x_vec.push_back(Eigen::Vector2d{3.0, 2.0});
+    x_vec.push_back(Eigen::Vector2d{-2.805118, 3.131312});
+    x_vec.push_back(Eigen::Vector2d{-3.77931, -3.283186});
+    x_vec.push_back(Eigen::Vector2d{3.584428, -1.848126});
 
     double function_value;
-    Eigen::Vector2d gradient; 
-    Eigen::Matrix2d hessian; 
+    Eigen::Vector2d gradient;
+    Eigen::Matrix2d hessian;
 
-    
-    //CostFunctionExample myfunction;
-    //CostFunctionQuadratic myfunction;
-    //CostFunctionHimmelblau myfunction;
-    //CostFunctionRosenbrock myfunction; 
+    // CostFunctionExample / CostFunctionQuadratic / CostFunctionHimmelblau / CostFunctionRosenbrock / CostFunctionMcCormick
     CostFunctionMcCormick myfunction;
-
-
-    CostFunctionBase* pFunction{&myfunction};
+    CostFunctionBase* pFunction = &myfunction;
 
     for (const auto& x : x_vec) {
         function_value = pFunction->calculateCostFunctionValue(x);
         pFunction->calculateGradient(x, gradient);
         pFunction->calculateHessian(x, hessian);
 
-        std::cout << "x = " << std::endl << x << std::endl 
-        << "f(x) = " << std::endl << function_value << std::endl 
-        << "g(x) = " << std::endl << gradient << std::endl
-        << "H(x) = " << std::endl << hessian << std::endl << std::endl;
-
+        std::cout << "x = " << std::endl << x << std::endl
+                  << "f(x) = " << std::endl << function_value << std::endl
+                  << "g(x) = " << std::endl << gradient << std::endl
+                  << "H(x) = " << std::endl << hessian << std::endl << std::endl;
     }
 
 
