@@ -7,7 +7,7 @@
 #include "../costfunctionhimmelblau.h"
 #include "../costfunctionmccormick.h"
 #include "../costfunctionrosenbrock.h"
-#include "../costfunctionrosenbrock.h"
+
 
 int main() {
 
