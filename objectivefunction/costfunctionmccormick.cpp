@@ -1,13 +1,13 @@
 #include <cmath>
 #include "costfunctionmccormick.h"
 
-double CostFunctionMcComick::calculateCostFunctionValue(const Eigen::Ref<const Eigen::VectorXd>& x){
+double CostFunctionMcCormick::calculateCostFunctionValue(const Eigen::Ref<const Eigen::VectorXd>& x){
     double x1 = x(0);
     double x2 = x(1);
     return std::sin(x1 + x2) + (x1 - x2)*(x1 - x2) - 1.5*x1 + 2.5*x2 + 1;
 }
 
-void CostFunctionMcComick::calculateGradient(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::VectorXd> gradient){
+void CostFunctionMcCormick::calculateGradient(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::VectorXd> gradient){
     double x1 = x(0);
     double x2 = x(1);
     double cos_sum_x1_x2 = std::cos(x1 + x2);
@@ -15,7 +15,7 @@ void CostFunctionMcComick::calculateGradient(const Eigen::Ref<const Eigen::Vecto
     gradient(1) = cos_sum_x1_x2 - 2*(x1 - x2) + 2.5;
 }
 
-void CostFunctionMcComick::calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian){
+void CostFunctionMcCormick::calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian){
     double x1 = x(0);
     double x2 = x(1);
 

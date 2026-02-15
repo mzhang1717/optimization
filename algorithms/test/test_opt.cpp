@@ -14,8 +14,8 @@
 int main () {
     //CostFunctionQuadratic myfunction;
     //CostFunctionHimmelblau myfunction;
-    //CostFunctionMcComick myfunction;
-    CostFunctionRosenbrock myfunction;
+    CostFunctionMcCormick myfunction;
+    //CostFunctionRosenbrock myfunction;
 
     //OptimizerBase myOptimizerBase(myfunction, Eigen::Vector2d{2.0,1.0}) ;
     //OptimizerDescent myOptimizerDescent(myfunction, Eigen::Vector2d{2.0,1.0}) ;
