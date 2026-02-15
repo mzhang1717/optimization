@@ -34,7 +34,7 @@ optimization/
 │   ├── costfunctionhimmelblau.{h,cpp}
 │   ├── costfunctionmccormick.{h,cpp}
 │   ├── costfunctionconvex3d.{h,cpp}   # 3D convex (x₁² + x₂² + x₃²)
-│   ├── costfunctionexample.{h,cpp}   # Scalar example (not for vector optimizers)
+│   ├── costfunctionexample.{h,cpp}   # Scalar example (w/ vector API)
 │   └── test/
 │       ├── BUILD
 │       └── test_function.cpp       # Evaluate cost functions at sample points
@@ -99,9 +99,3 @@ bazel run //test:test_ldlt
 2. Add a `cc_library` in `algorithms/BUILD` depending on `:optimizer_base` and `//objectivefunction:function_base`.
 3. Instantiate and run it in `algorithms/test/test_opt.cpp`, and add the new library to the test target’s `deps`.
 
----
-
-## Documentation
-
-- `algorithms/OPTIMIZER_REVIEW.md` — review of optimizer base and derived classes, including robustness fixes.
-- `objectivefunction/OBJECTIVEFUNCTION_REVIEW.md` — review of cost function module and conventions.
