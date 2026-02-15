@@ -2,17 +2,24 @@
 
 #include "costfunctionbase.h"
 
-// This is a example of a cost function that is used to test the optimizer.
-// Note that this is a scalar function, not a vector function.
-// The optimizer shall not use this function to test the optimizer. 
-
-
+/**
+ * Example scalar cost function: polynomial f(x) = x^8 - 27*x^7 + ... (single variable).
+ *
+ * Implements both the scalar API (double x) and the vector API by treating x(0)
+ * as the scalar. Compatible with optimizers when used with a 1D initial guess
+ * (e.g. Eigen::Vector1d or Eigen::VectorXd of size 1).
+ */
 class CostFunctionExample : public CostFunctionBase {
 public:
-    CostFunctionExample(){}
-    ~CostFunctionExample(){}
+    CostFunctionExample() {}
+    ~CostFunctionExample() {}
 
     double calculateCostFunctionValue(double x);
     double calculateGradient(double x);
     double calculateHessian(double x);
+
+    // Vector API (1D): delegates to scalar implementation using x(0).
+    double calculateCostFunctionValue(const Eigen::Ref<const Eigen::VectorXd>& x) override;
+    void calculateGradient(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::VectorXd> gradient) override;
+    void calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian) override;
 };
