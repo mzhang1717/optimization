@@ -12,5 +12,7 @@ void CostFunctionConvex3D::calculateGradient(const Eigen::Ref<const Eigen::Vecto
 
 void CostFunctionConvex3D::calculateHessian(const Eigen::Ref<const Eigen::VectorXd>& x, Eigen::Ref<Eigen::MatrixXd> hessian) {
     hessian.setZero();
-    hessian(0, 0) = hessian(1, 1) = hessian(2, 2) = 2;
+    hessian(0, 0) = 2;
+    hessian(1, 1) = 2;
+    hessian(2, 2) = 2;
 }

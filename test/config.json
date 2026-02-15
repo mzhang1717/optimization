@@ -1,0 +1,13 @@
+{
+    "project_name": "optimization",
+    "algorithms": {
+        "gradient_descent": {
+            "type": "gradient_descent",
+            "parameters": {
+                "step_size": 1e-3,
+                "max_iterations": 1000,
+                "max_linesearch": 50
+            }
+        }
+    }
+}
