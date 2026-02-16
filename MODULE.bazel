@@ -4,4 +4,4 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "nlohmann_json", version = "3.11.2")
