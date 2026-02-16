@@ -24,7 +24,7 @@ void OptimizerBase::optimize() {
         backtrackingLineSearch();
         update();
         if (std::isnan(function_value_)) {
-            std::cerr << "*** NaN *** at step " << number_iterations << std::endl;
+            std::cerr << "*** NaN *** at step " << number_iterations_ << std::endl;
             break;
         }
     }
@@ -32,18 +32,18 @@ void OptimizerBase::optimize() {
 }
 
 bool OptimizerBase::isTerminationReady() {
-    return (gradient_.norm() <= gradient_epsilon_ || number_iterations >= max_iterations_);
+    return (gradient_.norm() <= gradient_epsilon_ || number_iterations_ >= max_iterations_);
 }
 
 void OptimizerBase::update() {
-    number_iterations++;
+    number_iterations_++;
     x_ += step_size_ * search_direction_;
     function_value_ = ptr_cost_function_->calculateCostFunctionValue(x_);
     ptr_cost_function_->calculateGradient(x_, gradient_);
 }
 
 void OptimizerBase::initialUpdate() {
-    number_iterations = 0;
+    number_iterations_ = 0;
     x_ = initial_guess_;
     function_value_ = ptr_cost_function_->calculateCostFunctionValue(x_);
     ptr_cost_function_->calculateGradient(x_, gradient_);
@@ -72,5 +72,5 @@ void OptimizerBase::showResults() const {
     std::cout << "x_min = " << std::endl << x_ << std::endl
               << "f(x_min) = " << function_value_ << std::endl
               << "g(x_min) = " << std::endl << gradient_ << std::endl
-              << "num_iterations = " << number_iterations << std::endl << std::endl;
+              << "num_iterations = " << number_iterations_ << std::endl << std::endl;
 }

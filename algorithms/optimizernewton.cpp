@@ -15,7 +15,7 @@ void OptimizerNewton::calculateSearchDirection() {
         // Solve H * d = -g via LDLT (numerically more stable than forming H^{-1}).
         search_direction_ = -hessian_.ldlt().solve(gradient_);
     } else {
-        std::cout << "At " << number_iterations << "th iteration: Hessian is NOT positive definite!" << std::endl;
+        std::cout << "At " << number_iterations_ << "th iteration: Hessian is NOT positive definite!" << std::endl;
         std::cout << "Hessian = " << std::endl << hessian_ << std::endl;
         search_direction_ = -gradient_;  // Fallback to steepest descent.
     }

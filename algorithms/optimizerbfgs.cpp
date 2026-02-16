@@ -70,6 +70,6 @@ void OptimizerBFGS::backtrackingLineSearch() {
     }
 
     if (step_size_ < min_step_size) {
-        std::cout << "At " << number_iterations << "th iteration, step_size_ = " << step_size_ << std::endl;
+        std::cout << "At " << number_iterations_ << "th iteration, step_size_ = " << step_size_ << std::endl;
     }
 }

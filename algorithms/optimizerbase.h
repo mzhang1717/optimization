@@ -50,7 +50,7 @@ public:
     // --- Termination and iteration limits ---
     double gradient_epsilon_;              ///< Stop when ||gradient_|| <= this (set by subclass).
     int max_iterations_;                   ///< Stop after this many updates (default 5000).
-    int number_iterations;                 ///< Number of update() calls so far in this run.
+    int number_iterations_;                 ///< Number of update() calls so far in this run.
     int max_linesearch_;                   ///< Max backtracking steps per iteration (default 50).
 
     Eigen::VectorXd initial_guess_;       ///< Starting point for optimize().
