@@ -2,13 +2,31 @@
 #include <cmath>
 #include "optimizerbase.h"
 
-OptimizerBase::OptimizerBase() {}
+OptimizerBase::OptimizerBase()
+    : ptr_cost_function_{nullptr},
+      function_value_{0.0},
+      step_size_{0.0},
+      gradient_epsilon_{1e-6},
+      max_iterations_{5000},
+      number_iterations_{0},
+      max_linesearch_{50},
+      min_step_size_{1e-14},
+      initial_step_size_{1.0},
+      shrink_factor_{0.5},
+      slope_factor_{1e-4},
+      curve_factor_{0.9} {}
 
 OptimizerBase::OptimizerBase(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini)
     : ptr_cost_function_{&costfunction}, initial_guess_{x_ini} {
     gradient_.resize(x_ini.rows(), x_ini.cols());
     max_iterations_ = 5000;
     max_linesearch_ = 50;
+    min_step_size_ = 1e-14;
+    gradient_epsilon_ = 1e-6;
+    initial_step_size_ = 1.0;
+    shrink_factor_ = 0.5;
+    slope_factor_ = 1e-4;
+    curve_factor_ = 0.9;
 }
 
 OptimizerBase::~OptimizerBase() {}
@@ -55,14 +73,13 @@ void OptimizerBase::backtrackingLineSearch() {
     // Directional derivative: gradient' * search_direction_ (used in Armijo condition).
     double directional_derivative = gradient_.transpose() * search_direction_;
 
-    const double min_step_size = 1e-14;
     int num_linesearch = 0;
     // Armijo: accept when f(x + step*p) <= f(x) + slope_factor_ * step * (gradient'*p).
     while (ptr_cost_function_->calculateCostFunctionValue(x_ + step_size_ * search_direction_)
            > (function_value_ + slope_factor_ * step_size_ * directional_derivative)) {
         step_size_ *= shrink_factor_;
         num_linesearch++;
-        if (num_linesearch >= max_linesearch_ || step_size_ < min_step_size) {
+        if (num_linesearch >= max_linesearch_ || step_size_ < min_step_size_) {
             break;
         }
     }

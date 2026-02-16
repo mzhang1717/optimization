@@ -1,7 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <eigen3/Eigen/Dense>
-#include "../costfunctionexample.h"
+#include "../costfunctionscalar.h"
 #include "../costfunctionquadratic.h"
 #include "../costfunctionhimmelblau.h"
 #include "../costfunctionmccormick.h"
@@ -73,9 +73,9 @@ int main() {
     CostFunctionMcCormick mccormick_function;
     test_2d_function("CostFunctionMcCormick", &mccormick_function, x2_vec);
 
-    // ----- CostFunctionExample (scalar API) -----
-    std::cout << "=== CostFunctionExample (scalar API) ===" << std::endl;
-    CostFunctionExample example_function;
+    // ----- CostFunctionScalar (scalar API) -----
+    std::cout << "=== CostFunctionScalar (scalar API) ===" << std::endl;
+    CostFunctionScalar example_function;
     std::vector<double> x_scalar = {0.0, 2.0, 4.0, 6.0};
     for (double x : x_scalar) {
         double f = example_function.calculateCostFunctionValue(x);
@@ -85,8 +85,8 @@ int main() {
     }
     std::cout << std::endl;
 
-    // ----- CostFunctionExample (vector API, 1D: x(0) as scalar) -----
-    std::cout << "=== CostFunctionExample (vector API, 1D) ===" << std::endl;
+    // ----- CostFunctionScalar (vector API, 1D: x(0) as scalar) -----
+    std::cout << "=== CostFunctionScalar (vector API, 1D) ===" << std::endl;
     CostFunctionBase* pExample = &example_function;
     std::vector<Eigen::VectorXd> x1_vec = {
         Eigen::Vector<double, 1>(0.0),

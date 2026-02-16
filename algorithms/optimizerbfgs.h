@@ -1,7 +1,24 @@
 #pragma once
 #include <cmath>
+#include <string>
 #include <eigen3/Eigen/Dense>
+#include <nlohmann/json.hpp>
 #include "optimizerbase.h"
+
+struct OptimizerBFGSParams {
+    int max_iterations = 5000;
+    int max_linesearch = 50;
+    double min_step_size = 1e-14;
+    double gradient_epsilon = 1e-6;
+    double initial_step_size = 1.0;
+    double shrink_factor = 0.9;
+    double slope_factor = 1e-4;
+    double curve_factor = 0.9;
+    double curvature_epsilon = 1e-10;
+
+    static OptimizerBFGSParams fromJson(const nlohmann::json& config);
+    static OptimizerBFGSParams fromJsonFile(const std::string& config_path);
+};
 
 /**
  * BFGS quasi-Newton optimizer.
@@ -18,6 +35,11 @@ class OptimizerBFGS : public OptimizerBase {
 public:
     OptimizerBFGS() {}
     OptimizerBFGS(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini);
+    OptimizerBFGS(
+        CostFunctionBase& costfunction,
+        const Eigen::Ref<const Eigen::VectorXd>& x_ini,
+        const OptimizerBFGSParams& params
+    );
     ~OptimizerBFGS() {}
 
     /// Set search_direction_ = -hessian_inverse_ * gradient_.
@@ -31,4 +53,5 @@ public:
 
 private:
     Eigen::MatrixXd hessian_inverse_;  ///< Approximation to inverse Hessian; updated in update().
+    double curvature_epsilon_;         ///< Safeguard threshold for y'*s in BFGS update.
 };

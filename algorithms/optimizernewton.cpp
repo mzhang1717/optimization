@@ -1,13 +1,63 @@
 #include <iostream>
+#include <fstream>
+#include <stdexcept>
 #include "optimizernewton.h"
 
+namespace {
+template <typename T>
+T ReadOrDefault(const nlohmann::json& section, const char* key, T default_value) {
+    if (!section.contains(key)) {
+        return default_value;
+    }
+    return section.at(key).get<T>();
+}
+}
+
+OptimizerNewtonParams OptimizerNewtonParams::fromJson(const nlohmann::json& config) {
+    const nlohmann::json& section = config.contains("newton") ? config.at("newton") : config;
+
+    OptimizerNewtonParams params;
+    params.max_iterations = ReadOrDefault<int>(section, "max_iterations", params.max_iterations);
+    params.max_linesearch = ReadOrDefault<int>(section, "max_linesearch", params.max_linesearch);
+    params.min_step_size = ReadOrDefault<double>(section, "min_step_size", params.min_step_size);
+    if (section.contains("gradient_epsilon")) {
+        params.gradient_epsilon = section.at("gradient_epsilon").get<double>();
+    } else if (section.contains("gradien_epsilon")) {
+        // Backward-compatible fallback for existing config key typo.
+        params.gradient_epsilon = section.at("gradien_epsilon").get<double>();
+    }
+    params.initial_step_size = ReadOrDefault<double>(section, "initial_step_size", params.initial_step_size);
+    params.shrink_factor = ReadOrDefault<double>(section, "shrink_factor", params.shrink_factor);
+    params.slope_factor = ReadOrDefault<double>(section, "slope_factor", params.slope_factor);
+    return params;
+}
+
+OptimizerNewtonParams OptimizerNewtonParams::fromJsonFile(const std::string& config_path) {
+    std::ifstream file(config_path);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open config file: " + config_path);
+    }
+    nlohmann::json config;
+    file >> config;
+    return fromJson(config);
+}
+
 OptimizerNewton::OptimizerNewton(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini)
-    : OptimizerBase{costfunction, x_ini} {
+    : OptimizerNewton(costfunction, x_ini, OptimizerNewtonParams{}) {}
+
+OptimizerNewton::OptimizerNewton(
+    CostFunctionBase& costfunction,
+    const Eigen::Ref<const Eigen::VectorXd>& x_ini,
+    const OptimizerNewtonParams& params
+) : OptimizerBase{costfunction, x_ini} {
     hessian_.resize(x_ini.rows(), x_ini.rows());
-    gradient_epsilon_ = 0.000001;
-    initial_step_size_ = 1.0;
-    shrink_factor_ = 0.9;
-    slope_factor_ = 0.0001;
+    max_iterations_ = params.max_iterations;
+    max_linesearch_ = params.max_linesearch;
+    min_step_size_ = params.min_step_size;
+    gradient_epsilon_ = params.gradient_epsilon;
+    initial_step_size_ = params.initial_step_size;
+    shrink_factor_ = params.shrink_factor;
+    slope_factor_ = params.slope_factor;
 }
 
 void OptimizerNewton::calculateSearchDirection() {

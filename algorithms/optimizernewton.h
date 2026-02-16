@@ -1,7 +1,22 @@
 #pragma once
 #include <cmath>
+#include <string>
 #include <eigen3/Eigen/Dense>
+#include <nlohmann/json.hpp>
 #include "optimizerbase.h"
+
+struct OptimizerNewtonParams {
+    int max_iterations = 5000;
+    int max_linesearch = 50;
+    double min_step_size = 1e-14;
+    double gradient_epsilon = 1e-6;
+    double initial_step_size = 1.0;
+    double shrink_factor = 0.9;
+    double slope_factor = 1e-4;
+
+    static OptimizerNewtonParams fromJson(const nlohmann::json& config);
+    static OptimizerNewtonParams fromJsonFile(const std::string& config_path);
+};
 
 /**
  * Newton's method optimizer.
@@ -16,6 +31,11 @@ class OptimizerNewton : public OptimizerBase {
 public:
     OptimizerNewton() {}
     OptimizerNewton(CostFunctionBase& costfunction, const Eigen::Ref<const Eigen::VectorXd>& x_ini);
+    OptimizerNewton(
+        CostFunctionBase& costfunction,
+        const Eigen::Ref<const Eigen::VectorXd>& x_ini,
+        const OptimizerNewtonParams& params
+    );
     ~OptimizerNewton() {}
 
     /// Newton direction: solve H*d = -g via LDLT; if H not PD, use -gradient_.

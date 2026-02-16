@@ -52,6 +52,7 @@ public:
     int max_iterations_;                   ///< Stop after this many updates (default 5000).
     int number_iterations_;                 ///< Number of update() calls so far in this run.
     int max_linesearch_;                   ///< Max backtracking steps per iteration (default 50).
+    double min_step_size_;                 ///< Lower bound for line search step before giving up.
 
     Eigen::VectorXd initial_guess_;       ///< Starting point for optimize().
 

@@ -7,9 +7,9 @@ cc_library(
 )
 
 cc_library(
-    name = "function_example",
-    srcs = ["costfunctionexample.cpp"],
-    hdrs = ["costfunctionexample.h"],
+    name = "function_scalar",
+    srcs = ["costfunctionscalar.cpp"],
+    hdrs = ["costfunctionscalar.h"],
     deps =[":function_base",],
     visibility = ["//objectivefunction/test:__pkg__",
     "//algorithms:__pkg__",

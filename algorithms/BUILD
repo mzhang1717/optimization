@@ -11,7 +11,9 @@ cc_library(
     srcs = ["optimizerdescent.cpp"],
     hdrs = ["optimizerdescent.h"],
     deps = ["//objectivefunction:function_base",
-    ":optimizer_base",],
+    ":optimizer_base",
+    "@nlohmann_json//:json",
+    ],
     visibility = ["//algorithms/test:__pkg__"],
 )
 
@@ -20,7 +22,9 @@ cc_library(
     srcs = ["optimizernewton.cpp"],
     hdrs = ["optimizernewton.h"],
     deps = ["//objectivefunction:function_base",
-    ":optimizer_base",],
+    ":optimizer_base",
+    "@nlohmann_json//:json",
+    ],
     visibility = ["//algorithms/test:__pkg__"],
 )
 
@@ -29,7 +33,9 @@ cc_library(
     srcs = ["optimizerbfgs.cpp"],
     hdrs = ["optimizerbfgs.h"],
     deps = ["//objectivefunction:function_base",
-    ":optimizer_base",],
+    ":optimizer_base",
+    "@nlohmann_json//:json",
+    ],
     visibility = ["//algorithms/test:__pkg__"],
 )
 

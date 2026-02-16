@@ -9,10 +9,10 @@
  * as the scalar. Compatible with optimizers when used with a 1D initial guess
  * (e.g. Eigen::Vector1d or Eigen::VectorXd of size 1).
  */
-class CostFunctionExample : public CostFunctionBase {
+class CostFunctionScalar : public CostFunctionBase {
 public:
-    CostFunctionExample() {}
-    ~CostFunctionExample() {}
+    CostFunctionScalar() {}
+    ~CostFunctionScalar() {}
 
     double calculateCostFunctionValue(double x);
     double calculateGradient(double x);

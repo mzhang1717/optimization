@@ -1,0 +1,31 @@
+{
+  "gradient_descent": {
+    "max_iterations": 5000,
+    "max_linesearch": 50,
+    "min_step_size": 1e-14,
+    "gradient_epsilon": 1e-6,
+    "initial_step_size": 1.0,
+    "shrink_factor": 0.5,
+    "slope_factor": 0.5
+  },
+  "newton": {
+    "max_iterations": 5000,
+    "max_linesearch": 50,
+    "min_step_size": 1e-14,
+    "gradient_epsilon": 1e-6,
+    "initial_step_size": 1.0,
+    "shrink_factor": 0.9,
+    "slope_factor": 1e-4
+  },
+  "bfgs": {
+    "max_iterations": 5000,
+    "max_linesearch": 50,
+    "min_step_size": 1e-14,
+    "gradient_epsilon": 1e-6,
+    "initial_step_size": 1.0,
+    "shrink_factor": 0.9,
+    "slope_factor": 1e-4,
+    "curve_factor": 0.9,
+    "curvature_epsilon": 1e-10
+  }
+}

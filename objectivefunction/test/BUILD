@@ -3,7 +3,7 @@ cc_binary(
     srcs = ["test_function.cpp"],
     deps = ["//objectivefunction:function_base",
             "//objectivefunction:function_convex3d",
-            "//objectivefunction:function_example",
+            "//objectivefunction:function_scalar",
             "//objectivefunction:function_quadratic",
             "//objectivefunction:function_himmelblau",
             "//objectivefunction:function_mccormick",

@@ -34,7 +34,7 @@ optimization/
 │   ├── costfunctionhimmelblau.{h,cpp}
 │   ├── costfunctionmccormick.{h,cpp}
 │   ├── costfunctionconvex3d.{h,cpp}   # 3D convex (x₁² + x₂² + x₃²)
-│   ├── costfunctionexample.{h,cpp}   # Scalar example (w/ vector API)
+│   ├── costfunctionscalar.{h,cpp}    # Scalar example (w/ vector API)
 │   └── test/
 │       ├── BUILD
 │       └── test_function.cpp       # Evaluate cost functions at sample points
@@ -53,7 +53,7 @@ optimization/
   - `calculateCostFunctionValue(x)` → scalar
   - `calculateGradient(x, gradient)` → writes gradient
   - `calculateHessian(x, hessian)` → writes Hessian
-- **Concrete:** Quadratic, Rosenbrock, Himmelblau, McCormick, Convex3D, Example (scalar-only). Each implements the vector overloads used by the optimizers.
+- **Concrete:** Quadratic, Rosenbrock, Himmelblau, McCormick, Convex3D, Scalar (single-variable). Each implements the vector overloads used by the optimizers.
 
 ### Optimizers (`algorithms/`)
 
@@ -98,4 +98,3 @@ bazel run //test:test_ldlt
 1. Add `optimizer<name>.{h,cpp}` in `algorithms/`, subclass `OptimizerBase`, override at least `calculateSearchDirection()`.
 2. Add a `cc_library` in `algorithms/BUILD` depending on `:optimizer_base` and `//objectivefunction:function_base`.
 3. Instantiate and run it in `algorithms/test/test_opt.cpp`, and add the new library to the test target’s `deps`.
-

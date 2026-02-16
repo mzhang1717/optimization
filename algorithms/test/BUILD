@@ -18,6 +18,7 @@
 cc_binary(
     name = "test_opt",
     srcs = ["test_opt.cpp"],
+    data = ["optimizer_config.json"],
     deps = ["//algorithms:optimizer_base",
             "//algorithms:optimizer_descent",
             "//algorithms:optimizer_newton",
@@ -27,5 +28,6 @@ cc_binary(
             "//objectivefunction:function_mccormick",
             "//objectivefunction:function_quadratic",
             "//objectivefunction:function_rosenbrock",
+            "//objectivefunction:function_scalar",
     ],
 )
