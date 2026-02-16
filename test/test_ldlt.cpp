@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     int max_iterations = data["gradient_descent"]["max_iterations"];
     int max_linesearch = data["gradient_descent"]["max_linesearch"];
     double min_step_size = data["gradient_descent"]["min_step_size"];
-    double gradien_epsilon = data["gradient_descent"]["gradien_epsilon"];
+    double gradient_epsilon = data["gradient_descent"]["gradient_epsilon"];
     double initial_step_size = data["gradient_descent"]["initial_step_size"];
     double shrink_factor = data["gradient_descent"]["shrink_factor"];
     double slope_factor = data["gradient_descent"]["slope_factor"];
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     std::cout << "Max iterations: " << max_iterations << std::endl;
     std::cout << "Max linesearch: " << max_linesearch << std::endl;
     std::cout << "Min step size: " << min_step_size << std::endl;
-    std::cout << "Gradien epsilon: " << gradien_epsilon << std::endl;
+    std::cout << "Gradient epsilon: " << gradient_epsilon << std::endl;
     std::cout << "Initial step size: " << initial_step_size << std::endl;
     std::cout << "Shrink factor: " << shrink_factor << std::endl;
     std::cout << "Slope factor: " << slope_factor << std::endl;

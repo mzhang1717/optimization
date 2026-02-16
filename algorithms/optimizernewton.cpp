@@ -20,12 +20,7 @@ OptimizerNewtonParams OptimizerNewtonParams::fromJson(const nlohmann::json& conf
     params.max_iterations = ReadOrDefault<int>(section, "max_iterations", params.max_iterations);
     params.max_linesearch = ReadOrDefault<int>(section, "max_linesearch", params.max_linesearch);
     params.min_step_size = ReadOrDefault<double>(section, "min_step_size", params.min_step_size);
-    if (section.contains("gradient_epsilon")) {
-        params.gradient_epsilon = section.at("gradient_epsilon").get<double>();
-    } else if (section.contains("gradien_epsilon")) {
-        // Backward-compatible fallback for existing config key typo.
-        params.gradient_epsilon = section.at("gradien_epsilon").get<double>();
-    }
+    params.gradient_epsilon = ReadOrDefault<double>(section, "gradient_epsilon", params.gradient_epsilon);
     params.initial_step_size = ReadOrDefault<double>(section, "initial_step_size", params.initial_step_size);
     params.shrink_factor = ReadOrDefault<double>(section, "shrink_factor", params.shrink_factor);
     params.slope_factor = ReadOrDefault<double>(section, "slope_factor", params.slope_factor);
