@@ -40,7 +40,7 @@ optimization/
 │       └── test_function.cpp       # Evaluate cost functions at sample points
 └── test/                 # Standalone tests
     ├── BUILD
-    └── test_ldlt.cpp     # LDLT / positive-definiteness (e.g. for Newton)
+    └── test_ldlt.cpp     # testing sandbox
 ```
 
 ---
